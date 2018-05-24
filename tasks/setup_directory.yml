@@ -1,0 +1,8 @@
+- name: make base dir
+  file: path=/Users/macmini/app force=yes state=directory
+
+- name: make releases dir
+  file: path=/Users/macmini/app/releases force=yes state=directory owner=macmini group-macmini
+
+  - name: make shared dir
+  file: path=/Users/macmini/app/shared force=yes state=directory owner=macmini group-macmini

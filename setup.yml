@@ -1,0 +1,8 @@
+- hosts: spring
+  user: macmini
+  become: yes
+  become_method: sudo
+  tasks:
+    - include: "{{ BASE_DIR }}/tasks/setup_directory.yml"
+      vars:
+        group: group1
