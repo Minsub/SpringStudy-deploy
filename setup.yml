@@ -3,6 +3,6 @@
   become: yes
   become_method: sudo
   tasks:
-    - include: "{{ BASE_DIR }}/tasks/setup_directory.yml"
+    - include: ./tasks/setup_directory.yml
       vars:
         group: group1
