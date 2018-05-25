@@ -12,6 +12,6 @@
   
 - name: build
   become: no
-  local_action: command ./gradlew clean build -x test
+  local_action: command gradle clean build -x test
   args:
     chdir: '{{ local_tmp_dir }}'
