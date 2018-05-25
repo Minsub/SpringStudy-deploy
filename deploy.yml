@@ -1,0 +1,12 @@
+- hosts: spring
+  user: macmini
+  vars_files:
+    - conf/{{ phase }}.yml
+  tasks:
+    - include: tasks/build.yml
+      run_once: true
+
+    # - include: tasks/deploy.yml
+    # - include: tasks/stop.yml
+    # - include: tasks/start.yml
+      

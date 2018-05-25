@@ -1,0 +1,7 @@
+deploy_dir: /Users/macmini/app/{{ deploy_group }}
+git_repository: https://github.com/Minsub/SpringStudy.git
+git_branch: master
+spring_profile: "{{ phase }}"
+application_port: "{{ (deploy_group=='group1') | ternary('8080', '8090') }}"
+war_file: springStudy-*-SNAPSHOT.jar
+local_tmp_dir: /tmp/ansible/SpringStudy

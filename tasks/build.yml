@@ -1,0 +1,17 @@
+- name: clear temp directory
+  become: no
+  local_action: file path={{ local_tmp_dir }} force=yes state=absent
+
+- name: checkout git repository
+  become: no
+  local_action: git
+  args:
+    repo: '{{git_repository}}'
+    dest: '{{ local_tmp_dir }}'
+    version: '{{git_branch}}'
+  
+- name: build
+  become: no
+  local_action: command ./gradlew clean build -x test
+  args:
+    chdir: '{{ local_tmp_dir }}'
