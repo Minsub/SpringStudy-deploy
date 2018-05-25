@@ -1,0 +1,14 @@
+- name: detect jar file name
+  become: no
+  shell: ls -d {{jar_file}}
+  register: jar_filename
+  args:
+    chdir: "{{ deploy_dir }}/current"
+
+- name: start spring
+  shell: nohup java -Dspring.profiles.active={{spring_profile}} -jar {{jar_filename.stdout}} --application.port={{ application_port }} 2>&1 &
+  args:
+    chdir: "{{ deploy_dir }}/current"
+
+# - name: wait for startup
+#   wait_for: path={{ deploy_dir }}/shared/logs/application.port state=present delay=10 timeout=180

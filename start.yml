@@ -1,0 +1,6 @@
+- hosts: spring
+  user: macmini
+  vars_files:
+    - conf/{{ phase }}.yml  
+  tasks:
+    - include: 'tasks/start.yml'
