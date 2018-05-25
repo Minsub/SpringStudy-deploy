@@ -1,0 +1,13 @@
+- name: check old releases
+  shell: ls -t {{ deploy_dir }}/releases
+  register: releases
+
+- name: link current directory to previous release
+  file: src={{ deploy_dir }}/releases/{{ item.1 }} dest={{ deploy_dir }}/current force=yes state=link
+  with_indexed_items: "{{ releases.stdout_lines }}"
+  when: item.0 == 1
+
+- name: remove latest release
+  file: path={{ deploy_dir }}/releases/{{ item.1 }} force=yes state=absent
+  with_indexed_items: "{{ releases.stdout_lines }}"
+  when: item.0 == 0
