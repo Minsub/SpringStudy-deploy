@@ -1,0 +1,31 @@
+- name: check old releases
+  shell: ls -t {{ deploy_dir }}/releases
+  register: releases
+
+- name: delete old releases
+  file: path={{ deploy_dir }}/releases/{{ item.1 }} force=yes state=absent
+  with_indexed_items: "{{ releases.stdout_lines }}"
+  when: item.0 > 4
+
+- name: make new release folder name
+  become: no
+  local_action: shell date +%Y%m%d%H%M%S
+  register: release_folder
+
+- name: create releases directory
+  file: path={{ deploy_dir }}/releases/{{release_folder.stdout}} force=yes state=directory owner=macmini
+
+- name: link logs directory
+  file: src={{ deploy_dir }}/shared/logs dest={{ deploy_dir }}/releases/{{release_folder.stdout}}/logs force=yes state=link
+
+- name: detect jar file name
+  become: no
+  local_action: shell ls -d {{ local_tmp_dir }}/build/libs/{{jar_file}}
+  register: jar_filename
+
+- name: upload
+  become: no
+  synchronize: src={{jar_filename.stdout}} dest={{ deploy_dir }}/releases/{{release_folder.stdout}}
+
+- name: link current directory
+  file: src={{ deploy_dir }}/releases/{{release_folder.stdout}} dest={{ deploy_dir }}/current force=yes state=link
