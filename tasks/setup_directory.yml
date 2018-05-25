@@ -5,5 +5,5 @@
   file: path=/Users/macmini/app/{{group}}/releases force=yes state=directory owner=macmini
 
 - name: make shared dir
-  file: path=/Users/macmini/app/{{group}}/shared force=yes state=directory owner=macmini 
+  file: path=/Users/macmini/app/{{group}}/shared/logs force=yes state=directory owner=macmini 
 

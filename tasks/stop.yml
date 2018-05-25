@@ -1,0 +1,14 @@
+- stat: path={{ deploy_dir }}/shared/logs/application.pid
+  register: pid_check
+
+- name: read pid
+  shell: cat "{{ deploy_dir }}/shared/logs/application.pid"
+  register: pid
+  when: pid_check.stat.exists == True
+
+- name: stop spring
+  command: kill {{ pid.stdout }}
+  when: pid_check.stat.exists == True
+
+- name: wait for shutdown
+  wait_for: path={{ deploy_dir }}/shared/logs/application.port delay=5 timeout=600 state=absent
