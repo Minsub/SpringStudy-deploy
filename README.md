@@ -38,7 +38,7 @@ upstream spring-app {
 
 server {
     listen       80;
-    server_name  jiminsub.iptime.org;
+    server_name  jiminsub.asuscomm.com;
 
     location / {
          proxy_pass   http://spring-app;
